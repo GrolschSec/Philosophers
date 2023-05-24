@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/24 14:28:00 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/24 22:53:40 by rlouvrie         ###   ########.fr       */
+/*   Created: 2023/05/24 22:42:23 by rlouvrie          #+#    #+#             */
+/*   Updated: 2023/05/24 23:01:45 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-int	main(int argc, char **argv)
+void	free_data(t_data *data)
 {
-	t_data	data;
-
-	if (!check_args_num(argc))
-		return (1);
-	if (!check_args(&argv[1], argc - 1))
-		return (2);
-	if (!init(&data, &argv[1]))
-		return (3);
-	//philo(data);
-	free_data(&data);
-	return (0);
+	if (data->philos)
+		free(data->philos);
+	if (data->tid)
+		free(data->tid);
+	if (data->forks)
+		free(data->forks);
 }
