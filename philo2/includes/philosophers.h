@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 14:23:18 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/28 18:08:45 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/28 19:31:33 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdio.h>
 # include <limits.h>
 # include <time.h>
-# include <stdint.h>
 # include <string.h>
 # include <sys/time.h>
 # include <sys/types.h>
@@ -33,7 +32,7 @@ typedef struct s_philo
 	int					eat_cont;
 	int					status;
 	int					eating;
-	int					t_die;
+	u_int64_t			t_die;
 	pthread_mutex_t		lock;
 	pthread_mutex_t		*r_fork;
 	pthread_mutex_t		*l_fork;
@@ -47,9 +46,9 @@ typedef struct s_data
 	int					dead;
 	int					finished;
 	t_philo				*philos;
-	int					t_die;
-	int					t_eat;
-	int					t_sleep;
+	u_int64_t			t_die;
+	u_int64_t			t_eat;
+	u_int64_t			t_sleep;
 	u_int64_t			t_start;
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		lock;
@@ -67,13 +66,14 @@ void		ft_usleep(useconds_t time);
 /*init.c*/
 int			init(t_data *data, char **av);
 int			set_params(t_data *data, char **av);
-int			init_philo(t_data *data);
-int			init_forks(t_data *data);
-/*error.c*/
-void		error_handler(int errcode);
-void		err_mutex_init(t_data *data, int failure, int code);
+int			alloc(t_data *data);
+int			init_mutexes(t_data *data);
+int			init_philos(t_data *data);
 /*free.c*/
 void		free_data(t_data *data);
-/*routine.c*/
-void		*routine(void *args);
+void		mutexes_destroy(t_data *data, int failure, int code);
+/*error.c*/
+void		error_msg(int errcode);
+/*actions.c*/
+/*threads.c*/
 #endif

@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/24 21:00:19 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/28 18:26:45 by rlouvrie         ###   ########.fr       */
+/*   Created: 2023/05/28 18:54:00 by rlouvrie          #+#    #+#             */
+/*   Updated: 2023/05/28 19:24:40 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void	error_handler(int errcode)
+void	free_data(t_data *data)
 {
-	if (errcode == 1)
-		printf("Error: Invalid number of arguments (4 or 5).\n");
-	else if (errcode == 2)
-		printf("Error: Invalid number of philisophers.\n");
-	else if (errcode == 3)
-		printf("Error: Arguments values should be greater than zero.\n");
-	else if (errcode == 4)
-		printf("Error: Cannot allocate memory.\n");
-	else if (errcode == 5)
-		printf("Error: Cannot initialize mutexes.\n");
-	else if (errcode == 6)
-		printf("Error: Cannot create threads\n");
-	else if (errcode == 7)
-		printf("Error: Cannot join threads\n");
-	else if (errcode == 8)
-		printf("Error: Cannot get time.\n");
+	if (data->philos)
+		free(data->philos);
+	if (data->tid)
+		free(data->tid);
+	if (data->forks)
+		free(data->forks);
 }
 
-void	err_mutex_init(t_data *data, int failure, int code)
+void	mutexes_destroy(t_data *data, int failure, int code)
 {
 	int	i;
 

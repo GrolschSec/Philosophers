@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/24 18:31:31 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/28 19:04:25 by rlouvrie         ###   ########.fr       */
+/*   Created: 2023/05/28 18:53:40 by rlouvrie          #+#    #+#             */
+/*   Updated: 2023/05/28 19:36:03 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ int	init(t_data *data, char **av)
 {
 	memset(data, 0, sizeof(t_data));
 	set_params(data, av);
-	if (!init_philo(data))
+	if (!alloc(data))
 		return (0);
-	if (!init_forks(data))
+	if (!init_mutexes(data))
 		return (0);
+	init_philos(data);
 	return (1);
 }
 
@@ -36,56 +37,57 @@ int	set_params(t_data *data, char **av)
 	return (0);
 }
 
-int	init_philo(t_data *data)
+int	alloc(t_data *data)
+{
+	data->philos = malloc(sizeof(t_philo) * data->philo_nb);
+	if (!data->philos)
+		return (error_msg(4), 0);
+	memset(data->philos, 0, sizeof(t_philo) * data->philo_nb);
+	data->tid = malloc(sizeof(pthread_t) * data->philo_nb);
+	if (!data->tid)
+		return (free_data(data), error_msg(4), 0);
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->philo_nb);
+	if (!data->forks)
+		return (free_data(data), error_msg(4), 0);
+	return (1);
+}
+
+int	init_mutexes(t_data *data)
 {
 	int	i;
 
-	// ALLOC
-	data->philos = malloc(sizeof(t_philo) * data->philo_nb);
-	if (!data->philos)
-		return (error_handler(4), 0);
-	memset(data->philos, 0, sizeof(t_philo) * data->philo_nb);
-	//ALLOC
-	data->tid = malloc(sizeof(pthread_t) * data->philo_nb);
-	if (!data->tid)
-		return (free_data(data), error_handler(4), 0);
-	// ALLOC
-	data->forks = malloc(sizeof(pthread_mutex_t) * data->philo_nb);
-	if (!data->forks)
-		return (free_data(data), error_handler(4), 0);
-	i = 0;
-	// PHILO + MUTEX INIT 
-	while (i < data->philo_nb)
+	i = -1;
+	while (++i < data->philo_nb)
 	{
-		data->philos[i].id = i + 1;
-		data->philos[i].data = data;
-		data->philos[i].t_die = data->t_die;
 		if (pthread_mutex_init(&data->philos[i].lock, NULL) != 0)
-			return (error_handler(5), err_mutex_init(data, i, 1), 0);
-		i++;
+			return (mutexes_destroy(data, i, 1), error_msg(5), 0);
+	}
+	if (pthread_mutex_init(&data->lock, NULL) != 0)
+		return (mutexes_destroy(data, 0, 2), error_msg(5), 0);
+	if (pthread_mutex_init(&data->write, NULL) != 0)
+		return (mutexes_destroy(data, 0, 3), error_msg(5), 0);
+	i = -1;
+	while (++i < data->philo_nb)
+	{
+		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
+			return (mutexes_destroy(data, i, 4), error_msg(5), 0);
 	}
 	return (1);
 }
 
-int	init_forks(t_data *data)
+int	init_philos(t_data *data)
 {
 	int	i;
 
-	//MUTEX INIT
-	if (pthread_mutex_init(&data->lock, NULL) != 0)
-		return (err_mutex_init(data, 0, 2), error_handler(5), 0);
-	//MUTEX INIT
-	if (pthread_mutex_init(&data->write, NULL) != 0)
-		return (err_mutex_init(data, 0, 3), error_handler(5), 0);
-	i = -1;
-	//MUTEX INIT
-	while (++i < data->philo_nb)
-	{
-		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
-			return (err_mutex_init(data, i, 4), error_handler(5), 0);
-	}
 	data->philos[0].l_fork = &data->forks[0];
 	data->philos[0].r_fork = &data->forks[data->philo_nb - 1];
+	i = -1;
+	while (++i < data->philo_nb)
+	{
+		data->philos[i].id = i + 1;
+		data->philos[i].data = data;
+		data->philos[i].t_die = data->t_die;
+	}
 	i = 1;
 	while (i < data->philo_nb)
 	{

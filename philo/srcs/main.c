@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 14:28:00 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/24 22:53:40 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/28 18:45:08 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 		return (2);
 	if (!init(&data, &argv[1]))
 		return (3);
-	//philo(data);
-	free_data(&data);
+	if (!philo(&data))
+		return (4);
 	return (0);
 }
