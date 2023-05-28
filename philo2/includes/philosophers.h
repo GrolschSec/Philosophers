@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 14:23:18 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/28 19:31:33 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/29 01:07:00 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_philo
 	int					eat_cont;
 	int					status;
 	int					eating;
+	u_int64_t			last_meal;
 	u_int64_t			t_die;
 	pthread_mutex_t		lock;
 	pthread_mutex_t		*r_fork;
@@ -72,8 +73,22 @@ int			init_philos(t_data *data);
 /*free.c*/
 void		free_data(t_data *data);
 void		mutexes_destroy(t_data *data, int failure, int code);
+void		threads_join(t_data *data);
+void		clear(t_data *data);
 /*error.c*/
 void		error_msg(int errcode);
 /*actions.c*/
+void		take_forks(t_philo *philo);
+void		drop_forks(t_philo *philo);
+void		think(t_philo *philo);
+void		sleep_time(t_philo *philo);
+void		eat(t_philo *philo);
 /*threads.c*/
+int			init_threads(t_data *data);
+void		*philosopher_routine(void *arg);
+/*print.c*/
+void		print_status(t_philo *philo, char *message);
+/*??*/
+int			check_death(t_philo *philo);
+int			check_meal_count(t_data *data);
 #endif

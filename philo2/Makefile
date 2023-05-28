@@ -8,6 +8,7 @@ SRC = main.c \
 	error.c \
 	actions.c \
 	threads.c \
+	print.c \
 
 DIR 		= ${addprefix srcs/,${SRC}}
 

@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 18:52:14 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/28 18:52:16 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/28 21:34:12 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ u_int64_t	get_time(void)
 
 	if (gettimeofday(&time, NULL))
 		return ((u_int64_t)0);
-	return (time.tv_sec * (u_int64_t)1000 + time.tv_usec * (u_int64_t)1000);
+	return (time.tv_sec * (u_int64_t)1000 + time.tv_usec / (u_int64_t)1000);
 }
 
 void	ft_usleep(useconds_t time)

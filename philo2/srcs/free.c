@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 18:54:00 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/28 19:24:40 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/28 20:17:49 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@ void	free_data(t_data *data)
 		free(data->tid);
 	if (data->forks)
 		free(data->forks);
+}
+
+void	threads_join(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->philo_nb)
+		pthread_join(data->philos[i].t1, NULL);
 }
 
 void	mutexes_destroy(t_data *data, int failure, int code)
@@ -47,4 +56,10 @@ void	mutexes_destroy(t_data *data, int failure, int code)
 		}
 	}
 	free_data(data);
+}
+
+void	clear(t_data *data)
+{
+	threads_join(data);
+	mutexes_destroy(data, data->philo_nb, 4);
 }

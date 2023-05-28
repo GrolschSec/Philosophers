@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/24 14:28:00 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/29 01:07:51 by rlouvrie         ###   ########.fr       */
+/*   Created: 2023/05/28 22:36:02 by rlouvrie          #+#    #+#             */
+/*   Updated: 2023/05/29 01:11:18 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-int	main(int argc, char **argv)
+void	print_status(t_philo *philo, char *message)
 {
-	t_data	data;
+	u_int64_t	timestamp;
 
-	if (!check_args_num(argc))
-		return (1);
-	if (!check_args(&argv[1], argc - 1))
-		return (2);
-	if (!init(&data, &argv[1]))
-		return (3);
-	init_threads(&data);
-	clear(&data);
-	return (0);
+	pthread_mutex_lock(&philo->data->write);
+	timestamp = get_time() - philo->data->t_start;
+	printf("[%lu] %d %s\n", timestamp, philo->id, message);
+	pthread_mutex_unlock(&philo->data->write);
 }
