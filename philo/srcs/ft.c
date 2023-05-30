@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/24 14:55:06 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/28 18:25:38 by rlouvrie         ###   ########.fr       */
+/*   Created: 2023/05/30 20:51:29 by rlouvrie          #+#    #+#             */
+/*   Updated: 2023/05/31 00:17:43 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,34 @@ int	ft_atoi(const char *str)
 	return (tmp);
 }
 
-u_int64_t	get_time(void)
+long long	get_time(void)
 {
 	struct timeval	time;
 
-	if (gettimeofday(&time, NULL))
-		return ((u_int64_t)0);
-	return (time.tv_sec * (u_int64_t)1000 + time.tv_usec * (u_int64_t)1000);
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-void	ft_usleep(useconds_t time)
+void	ft_usleep(long long time, t_data *data)
 {
-	u_int64_t	start;
+	long long	temp;
 
-	start = get_time();
-	while (get_time() - start < time)
-		usleep(time / 10);
+	temp = get_time();
+	while (!(data->died))
+	{
+		if (get_time() - temp >= time)
+			break ;
+		usleep(50);
+	}
+}
+
+void	print_status(t_data *data, int id, char *str)
+{
+	pthread_mutex_lock(&(data->m_write));
+	if (!(data->died))
+	{
+		printf("%lli ", get_time() - data->t_start);
+		printf("%d %s\n", id, str);
+	}
+	pthread_mutex_unlock(&(data->m_write));
 }

@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 14:23:18 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/28 18:08:45 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/30 23:36:08 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,64 +16,67 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <limits.h>
-# include <time.h>
-# include <stdint.h>
 # include <string.h>
-# include <sys/time.h>
-# include <sys/types.h>
 # include <unistd.h>
+# include <sys/time.h>
+# define P_ERR_ARG 1
+# define I_ERR_MEM 2
+# define I_ERR_MUTEX 3
 
 struct	s_data;
 
-typedef struct s_philo
+typedef struct s_phi
 {
-	struct s_data		*data;
-	pthread_t			t1;
-	int					id;
-	int					eat_cont;
-	int					status;
-	int					eating;
-	int					t_die;
-	pthread_mutex_t		lock;
-	pthread_mutex_t		*r_fork;
-	pthread_mutex_t		*l_fork;
-}				t_philo;
+	int				id;
+	int				eat_count;
+	long long		last_meal;
+	pthread_t		th;
+	struct s_data	*data;
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*r_fork;
+}				t_phi;
 
 typedef struct s_data
 {
-	pthread_t			*tid;
-	int					philo_nb;
-	int					meals_nb;
-	int					dead;
-	int					finished;
-	t_philo				*philos;
-	int					t_die;
-	int					t_eat;
-	int					t_sleep;
-	u_int64_t			t_start;
-	pthread_mutex_t		*forks;
-	pthread_mutex_t		lock;
-	pthread_mutex_t		write;
+	int				died;
+	int				finished;
+	int				nb_phi;
+	int				nb_meals;
+	int				t_eat;
+	int				t_sleep;
+	int				t_die;
+	long long		t_start;
+	pthread_mutex_t	m_eat;
+	pthread_mutex_t	m_write;
+	pthread_mutex_t	*forks;
+	t_phi			*philos;
 }				t_data;
 
-/*parsing.c*/
-int			check_args_num(int argc);
-int			check_args(char **av, int ac);
 /*ft.c*/
 int			ft_strlen(char *str);
 int			ft_atoi(const char *str);
-u_int64_t	get_time(void);
-void		ft_usleep(useconds_t time);
+long long	get_time(void);
+void		ft_usleep(long long time, t_data *data);
+void		print_status(t_data *data, int id, char *str);
 /*init.c*/
 int			init(t_data *data, char **av);
-int			set_params(t_data *data, char **av);
-int			init_philo(t_data *data);
-int			init_forks(t_data *data);
+void		set_params(t_data *data, char **av);
+int			alloc(t_data *data);
+int			init_mutex(t_data *data);
+void		init_philos(t_data *data);
+/*threads.c*/
+void		*routine(void *philo);
+void		eating(t_phi *philo);
+void		end_checker(t_data *data);
+int			init_threads(t_data *data);
 /*error.c*/
-void		error_handler(int errcode);
-void		err_mutex_init(t_data *data, int failure, int code);
+void		write_error(char *str);
+void		error_msg(int errcode);
 /*free.c*/
-void		free_data(t_data *data);
-/*routine.c*/
-void		*routine(void *args);
+void		free_mem(t_data *data);
+void		destroy_mutex(t_data *data, int code, int failure);
+void		clear_all(t_data *data);
+/*parsing.c*/
+int			check_args_num(int argc);
+int			check_args(char **av, int ac);
 #endif

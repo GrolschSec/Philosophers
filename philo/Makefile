@@ -1,12 +1,12 @@
 NAME = philo
 
 SRC = main.c \
-	parsing.c \
-	ft.c \
-	init.c \
 	error.c \
-	routine.c \
+	ft.c \
 	free.c \
+	init.c \
+	parsing.c \
+	threads.c \
 
 DIR 		= ${addprefix srcs/,${SRC}}
 

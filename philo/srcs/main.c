@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/24 14:28:00 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/28 18:45:08 by rlouvrie         ###   ########.fr       */
+/*   Created: 2023/05/30 21:11:50 by rlouvrie          #+#    #+#             */
+/*   Updated: 2023/05/30 23:36:45 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	main(int argc, char **argv)
 		return (2);
 	if (!init(&data, &argv[1]))
 		return (3);
-	if (!philo(&data))
-		return (4);
+	init_threads(&data);
 	return (0);
 }
