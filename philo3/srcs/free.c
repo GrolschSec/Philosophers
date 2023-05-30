@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 21:20:00 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/30 21:50:29 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/30 22:45:52 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,14 @@ void	destroy_mutex(t_data *data, int code, int failure)
 		pthread_mutex_destroy(&(data->m_eat));
 	}
 	free_mem(data);
+}
+
+void	clear_all(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->nb_phi)
+		pthread_join(data->philos[i].th, NULL);
+	destroy_mutex(data, 2, data->nb_phi);
 }

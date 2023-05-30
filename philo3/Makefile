@@ -6,6 +6,7 @@ SRC = main.c \
 	free.c \
 	init.c \
 	parsing.c \
+	threads.c \
 
 DIR 		= ${addprefix srcs/,${SRC}}
 

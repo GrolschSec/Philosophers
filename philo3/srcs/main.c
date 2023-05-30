@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 21:11:50 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/30 22:24:11 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/30 23:36:45 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ int	main(int argc, char **argv)
 		return (2);
 	if (!init(&data, &argv[1]))
 		return (3);
-	destroy_mutex(&data, 2, data.nb_phi);
+	init_threads(&data);
 	return (0);
 }

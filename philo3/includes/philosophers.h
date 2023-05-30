@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 14:23:18 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/30 22:23:56 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/30 23:36:08 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,18 @@ void		set_params(t_data *data, char **av);
 int			alloc(t_data *data);
 int			init_mutex(t_data *data);
 void		init_philos(t_data *data);
+/*threads.c*/
+void		*routine(void *philo);
+void		eating(t_phi *philo);
+void		end_checker(t_data *data);
+int			init_threads(t_data *data);
 /*error.c*/
 void		write_error(char *str);
 void		error_msg(int errcode);
 /*free.c*/
 void		free_mem(t_data *data);
 void		destroy_mutex(t_data *data, int code, int failure);
+void		clear_all(t_data *data);
 /*parsing.c*/
 int			check_args_num(int argc);
 int			check_args(char **av, int ac);
