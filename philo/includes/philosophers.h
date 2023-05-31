@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 14:23:18 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/31 13:09:32 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:32:52 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 # include <string.h>
 # include <unistd.h>
 # include <sys/time.h>
-# define P_ERR_ARG 1
-# define I_ERR_MEM 2
-# define I_ERR_MUTEX 3
+# define P_ERR_NB_ARG 1
+# define P_ERR_ARG 2
+# define I_ERR_MEM 3
+# define I_ERR_MUTEX 4
 
 struct	s_data;
 

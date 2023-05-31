@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:50:53 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/30 22:18:27 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:33:23 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	write_error(char *str)
 
 void	error_msg(int errcode)
 {
-	if (errcode == P_ERR_ARG)
+	if (errcode == P_ERR_NB_ARG)
+		write_error("Wrong number of arguments");
+	else if (errcode == P_ERR_ARG)
 		write_error("Wrong arguments.");
 	else if (errcode == I_ERR_MEM)
 		write_error("Failed to allocate memory.");

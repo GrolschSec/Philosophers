@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:14:37 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/30 22:19:39 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:33:30 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_args_num(int argc)
 {
 	if (argc == 5 || argc == 6)
 		return (1);
-	error_msg(P_ERR_ARG);
+	error_msg(P_ERR_NB_ARG);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:51:29 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/31 12:42:18 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:44:26 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,8 @@ void	ft_usleep(long long time, t_data *data)
 {
 	long long	temp;
 
-	(void)data;
 	temp = get_time();
-	while (1)
+	while (!(check_died(&data->philos[0])))
 	{
 		if (get_time() - temp >= time)
 			break ;
