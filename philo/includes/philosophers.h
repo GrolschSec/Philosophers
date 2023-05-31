@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 14:23:18 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/31 13:32:52 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:01:14 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void		error_msg(int errcode);
 void		free_mem(t_data *data);
 void		destroy_mutex(t_data *data, int code, int failure);
 void		clear_all(t_data *data);
+void		clear_threads(t_data *data, int failure);
 /*parsing.c*/
 int			check_args_num(int argc);
 int			check_args(char **av, int ac);

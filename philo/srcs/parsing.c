@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:14:37 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/31 13:33:30 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:13:22 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ int	check_args(char **av, int ac)
 		arg = ft_atoi(av[i]);
 		if (i == 0 && arg < 1)
 			return (error_msg(P_ERR_ARG), 0);
-		else if (arg < 1)
+		else if ((ac == 5 && i == 4) && arg < 1)
+			return (error_msg(P_ERR_ARG), 0);
+		else if (arg < 0)
 			return (error_msg(P_ERR_ARG), 0);
 		i++;
 	}

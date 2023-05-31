@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 21:11:50 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/31 11:36:46 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:04:23 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int argc, char **argv)
 		return (2);
 	if (!init(&data, &argv[1]))
 		return (3);
-	init_threads(&data);
+	if (!init_threads(&data))
+		return (4);
 	return (0);
 }

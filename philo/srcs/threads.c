@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:40:56 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/31 13:08:17 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:03:01 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	end_checker(t_data *data)
 {
 	int	i;
 
-	while (!(data->finished))
+	while (!(check_eat(&data->philos[0])))
 	{
 		i = -1;
 		while (++i < data->nb_phi && !(data->died))
@@ -97,7 +97,15 @@ int	init_threads(t_data *data)
 	while (++i < data->nb_phi)
 	{
 		if (pthread_create(&(philos[i].th), NULL, &routine, &philos[i]) != 0)
+		{
+			pthread_mutex_lock(&(data->m_eat));
+			data->finished = 1;
+			data->died = 1;
+			pthread_mutex_lock(&(data->m_eat));
+			write_error("Error: threads creation probs.\n");
+			clear_threads(data, i);
 			return (0);
+		}
 		pthread_mutex_lock(&(data->m_eat));
 		philos[i].last_meal = get_time();
 		pthread_mutex_unlock(&(data->m_eat));
