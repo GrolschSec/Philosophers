@@ -15,7 +15,7 @@ CC			= gcc
 
 DEBUG		= -g
 
-CFLAGS		= -Wall -Werror -Wextra -pthread $(DEBUG)
+CFLAGS		= -Wall -Werror -Wextra -pthread
 
 OBJS		= ${DIR:.c=.o}
 
