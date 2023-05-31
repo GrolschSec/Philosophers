@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:51:29 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/31 00:17:43 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/31 12:42:18 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ void	ft_usleep(long long time, t_data *data)
 {
 	long long	temp;
 
+	(void)data;
 	temp = get_time();
-	while (!(data->died))
+	while (1)
 	{
 		if (get_time() - temp >= time)
 			break ;
@@ -74,7 +75,7 @@ void	ft_usleep(long long time, t_data *data)
 void	print_status(t_data *data, int id, char *str)
 {
 	pthread_mutex_lock(&(data->m_write));
-	if (!(data->died))
+	if (!(check_died(&data->philos[0])))
 	{
 		printf("%lli ", get_time() - data->t_start);
 		printf("%d %s\n", id, str);

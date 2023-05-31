@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 14:23:18 by rlouvrie          #+#    #+#             */
-/*   Updated: 2023/05/30 23:36:08 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:09:32 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ int			ft_atoi(const char *str);
 long long	get_time(void);
 void		ft_usleep(long long time, t_data *data);
 void		print_status(t_data *data, int id, char *str);
+/*ft-2.c*/
+void		case_one(t_phi *phi);
+int			check_died(t_phi *philo);
+void		define_died(t_data *data, int i);
+int			check_eat(t_phi *philo);
 /*init.c*/
 int			init(t_data *data, char **av);
 void		set_params(t_data *data, char **av);
